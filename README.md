@@ -22,8 +22,21 @@ Some test examples from another container
     qperf --help examples
 
 
+## Docker
 Execute shell in running container
 
     docker exec -it <id> /bin/sh
 
 
+## Kubernetes
+
+Use examples/kubernetes-networktest-deamonset.yaml to deploy a deamonset in current namespace.
+
+    # test latency
+    qperf 10.14.x.y tcp_lat
+
+    # test bandwidth for 10 seconds
+    qperf 10.42.x.y -t 10 tcp_bw
+    
+    
+    

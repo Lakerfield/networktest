@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: networktest
+  labels:
+    app.kubernetes.io/name: networktest
+spec:
+  selector:
+    matchLabels:
+      name: networktest
+      app.kubernetes.io/name: networktest
+  template:
+    metadata:
+      labels:
+        name: networktest
+        app.kubernetes.io/name: networktest
+    spec:
+      tolerations:
+      # this toleration is to have the daemonset runnable on master nodes
+      # remove it if your masters can't run pods
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: networktest
+        image: lakerfield/networktest
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      terminationGracePeriodSeconds: 10
